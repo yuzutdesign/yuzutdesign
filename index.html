@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YuzutDesign — Kreativstudio Bochum</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ---- Page-specific ---- */
+
+    /* Hero */
+    #hero {
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: calc(var(--nav-h) + 60px);
+      padding-bottom: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Animated grid background */
+    #hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 70% 60% at 60% 40%, black 0%, transparent 100%);
+      animation: grid-drift 18s ease-in-out infinite alternate;
+    }
+    @keyframes grid-drift {
+      from { background-position: 0 0; }
+      to   { background-position: 30px 30px; }
+    }
+
+    /* Glow orbs */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      pointer-events: none;
+      animation: orb-float 12s ease-in-out infinite alternate;
+    }
+    .orb-1 {
+      width: 480px; height: 480px;
+      background: rgba(245,208,0,0.08);
+      top: -100px; right: -60px;
+    }
+    .orb-2 {
+      width: 320px; height: 320px;
+      background: rgba(245,208,0,0.05);
+      bottom: 60px; left: -80px;
+      animation-delay: -6s;
+    }
+    @keyframes orb-float {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(20px, -30px) scale(1.05); }
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(245,208,0,0.1);
+      border: 1px solid rgba(245,208,0,0.2);
+      color: var(--accent);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      border-radius: 999px;
+      margin-bottom: 28px;
+      animation: fadein 0.7s ease both;
+    }
+    .hero-label .dot-pulse {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(245,208,0,0.5); }
+      50%      { box-shadow: 0 0 0 6px rgba(245,208,0,0); }
+    }
+
+    .hero-h1 {
+      font-size: clamp(3rem, 7vw, 6.5rem);
+      font-weight: 700;
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+      margin-bottom: 28px;
+      animation: fadein 0.8s 0.1s ease both;
+    }
+    .hero-h1 .line-accent { color: var(--accent); display: block; }
+    .hero-h1 .line-outline {
+      -webkit-text-stroke: 1.5px rgba(255,255,255,0.25);
+      color: transparent;
+      display: block;
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 480px;
+      line-height: 1.7;
+      margin-bottom: 44px;
+      animation: fadein 0.8s 0.2s ease both;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      animation: fadein 0.8s 0.3s ease both;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #111;
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 14px 28px;
+      border-radius: 999px;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover {
+      background: #ffe033;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(245,208,0,0.25);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.88rem;
+      padding: 14px 28px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* Scroll line */
+    .scroll-line {
+      position: absolute;
+      bottom: 40px;
+      left: 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      z-index: 2;
+      animation: fadein 1s 0.8s ease both;
+    }
+    .scroll-line .line {
+      width: 48px; height: 1px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+    }
+    .scroll-line span {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-family: 'Space Mono', monospace;
+    }
+
+    @keyframes fadein {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ---- Services Teaser ---- */
+    #services-teaser {
+      padding: 100px 0 80px;
+    }
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 56px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .section-header h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      max-width: 460px;
+    }
+    .section-header h2 em { color: var(--accent); font-style: normal; }
+    .section-header .see-all {
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: 0.02em;
+      transition: gap 0.2s;
+    }
+    .section-header .see-all:hover { gap: 14px; }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .svc-card {
+      background: var(--surface);
+      padding: 36px 32px;
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s, border-color 0.3s, transform 0.3s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .svc-card:hover {
+      background: var(--surface2);
+      border-color: rgba(245,208,0,0.3);
+      transform: translateY(-4px);
+    }
+    .svc-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s ease;
+    }
+    .svc-card:hover::before { transform: scaleX(1); }
+
+    .svc-icon {
+      width: 44px; height: 44px;
+      background: rgba(245,208,0,0.1);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+    }
+    .svc-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: -0.02em;
+    }
+    .svc-card p {
+      font-size: 0.83rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+    .svc-arrow {
+      position: absolute;
+      bottom: 24px; right: 24px;
+      color: var(--accent);
+      opacity: 0;
+      font-size: 1.2rem;
+      transition: opacity 0.25s, transform 0.25s;
+    }
+    .svc-card:hover .svc-arrow { opacity: 1; transform: translate(2px, -2px); }
+
+    /* ---- About Teaser ---- */
+    #about-teaser {
+      padding: 80px 0;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-text h2 {
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .about-text h2 em { color: var(--accent); font-style: normal; }
+    .about-text p { color: var(--muted); line-height: 1.75; margin-bottom: 16px; font-size: 0.95rem; }
+    .about-text .contact-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 28px;
+    }
+    .about-text .contact-list a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.88rem;
+      transition: color 0.2s;
+    }
+    .about-text .contact-list a:hover { color: var(--accent); }
+    .about-text .contact-list .icon { color: var(--accent); font-size: 1rem; }
+
+    .about-visual {
+      position: relative;
+    }
+    .about-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-card::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; right: -40px;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(245,208,0,0.08), transparent 70%);
+    }
+    .mono-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .skill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .skill-pill {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 999px;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+    }
+    @media (max-width: 600px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .section-header { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body class="page-fade">
+
+  <!-- Film Grain -->
+  <div id="grain"></div>
+
+  <!-- Navigation -->
+  <nav id="nav">
+    <a href="index.html" class="logo">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="6" y="4" width="10" height="32" rx="5" fill="white" transform="rotate(-15 6 4)"/>
+        <rect x="15" y="4" width="10" height="32" rx="5" fill="#f5d000" transform="rotate(-5 15 4)"/>
+        <rect x="24" y="4" width="10" height="32" rx="5" fill="white" transform="rotate(8 24 4)"/>
+      </svg>
+      <span>Yuzut<em>Design</em></span>
+    </a>
+    <ul id="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="dienstleistungen.html">Dienstleistungen</a></li>
+      <li><a href="mailto:yuzut.design21@gmail.com">Kontakt</a></li>
+    </ul>
+    <a href="mailto:yuzut.design21@gmail.com" class="cta-btn">Anfrage senden</a>
+    <button id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Drawer -->
+  <div id="drawer">
+    <button id="drawer-close" aria-label="Close">✕</button>
+    <a href="index.html" class="active">Home</a>
+    <a href="dienstleistungen.html">Dienstleistungen</a>
+    <a href="mailto:yuzut.design21@gmail.com">Kontakt</a>
+  </div>
+
+  <!-- Ticker -->
+  <div id="ticker" style="margin-top: calc(var(--nav-h) + 20px)">
+    <div id="ticker-track">
+      <span>Webdesign</span><span class="dot">✦</span>
+      <span>Logo Design</span><span class="dot">✦</span>
+      <span>Visitenkarten</span><span class="dot">✦</span>
+      <span>Social Media</span><span class="dot">✦</span>
+      <span>Speisekarten</span><span class="dot">✦</span>
+      <span>Kleidung</span><span class="dot">✦</span>
+      <span>Flyer & Poster</span><span class="dot">✦</span>
+      <span>Webdesign</span><span class="dot">✦</span>
+      <span>Logo Design</span><span class="dot">✦</span>
+      <span>Visitenkarten</span><span class="dot">✦</span>
+      <span>Social Media</span><span class="dot">✦</span>
+      <span>Speisekarten</span><span class="dot">✦</span>
+      <span>Kleidung</span><span class="dot">✦</span>
+      <span>Flyer & Poster</span><span class="dot">✦</span>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <section id="hero">
+    <div id="hero-grid"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <div class="container hero-inner">
+      <div class="hero-label">
+        <span class="dot-pulse"></span>
+        Kreativstudio — Bochum
+      </div>
+      <h1 class="hero-h1">
+        <span>Design das</span>
+        <span class="line-accent">wirkt.</span>
+        <span class="line-outline">Identität</span>
+        <span class="line-outline">die bleibt.</span>
+      </h1>
+      <p class="hero-sub">Von der Visitenkarte bis zur Website — wir gestalten visuelle Identitäten, die Ihr Unternehmen unverwechselbar machen.</p>
+      <div class="hero-actions">
+        <a href="dienstleistungen.html" class="btn-primary">Leistungen entdecken →</a>
+        <a href="mailto:yuzut.design21@gmail.com" class="btn-outline">Projekt besprechen</a>
+      </div>
+    </div>
+
+    <div class="scroll-line">
+      <div class="line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- Services Teaser -->
+  <section id="services-teaser">
+    <div class="container">
+      <div class="section-header">
+        <div class="tag">Leistungen</div>
+        <a href="dienstleistungen.html" class="see-all">Alle ansehen →</a>
+      </div>
+      <h2 style="font-size:clamp(2rem,4vw,3.2rem);font-weight:700;letter-spacing:-0.04em;line-height:1.1;margin-bottom:48px;">
+        Alles aus <em style="color:var(--accent);font-style:normal;">einer Hand</em>
+      </h2>
+
+      <div class="services-grid">
+        <a href="dienstleistungen.html#webdesign" class="svc-card">
+          <div class="svc-icon">🌐</div>
+          <h3>Website</h3>
+          <p>Moderne, schnelle Websites mit klarem Design und mobilem Fokus — maßgeschneidert für Ihr Business.</p>
+          <span class="svc-arrow">↗</span>
+        </a>
+        <a href="dienstleistungen.html#logo" class="svc-card">
+          <div class="svc-icon">✦</div>
+          <h3>Logo Design</h3>
+          <p>Unverwechselbare Logos und Corporate Identity, die Ihre Marke auf den ersten Blick erkennbar machen.</p>
+          <span class="svc-arrow">↗</span>
+        </a>
+        <a href="dienstleistungen.html#print" class="svc-card">
+          <div class="svc-icon">🖨</div>
+          <h3>Print & Druck</h3>
+          <p>Flyer, Poster, Visitenkarten und Speisekarten — professionell gestaltet und druckfertig.</p>
+          <span class="svc-arrow">↗</span>
+        </a>
+        <a href="dienstleistungen.html#social" class="svc-card">
+          <div class="svc-icon">📲</div>
+          <h3>Social Media</h3>
+          <p>Konsistente Bildsprache und Content-Vorlagen für Instagram, TikTok & Co.</p>
+          <span class="svc-arrow">↗</span>
+        </a>
+        <a href="dienstleistungen.html#kleidung" class="svc-card">
+          <div class="svc-icon">👕</div>
+          <h3>Kleidung</h3>
+          <p>Custom-Design für Arbeitskleidung, Merch und Teamwear — Ihre Marke zum Anziehen.</p>
+          <span class="svc-arrow">↗</span>
+        </a>
+        <a href="dienstleistungen.html" class="svc-card" style="display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;background:rgba(245,208,0,0.04);">
+          <span style="font-size:2rem;margin-bottom:12px;">→</span>
+          <h3 style="color:var(--accent);">Alle Leistungen</h3>
+          <p>Alle 7 Services im Überblick</p>
+          <span class="svc-arrow" style="opacity:1">↗</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Teaser -->
+  <section id="about-teaser">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text">
+          <div class="tag">Wer wir sind</div>
+          <h2>Kreativstudio mit <em>Leidenschaft</em> für Details</h2>
+          <p>YuzutDesign ist ein unabhängiges Kreativstudio mit Fokus auf visuell starke Markenerlebnisse. Wir arbeiten eng mit Kunden zusammen, um Design zu schaffen, das nicht nur gut aussieht, sondern auch wirkt.</p>
+          <p>Ob kleines Startup, lokales Restaurant oder etabliertes Unternehmen — jedes Projekt wird mit dem gleichen Anspruch an Qualität und Präzision umgesetzt.</p>
+          <div class="contact-list">
+            <a href="mailto:yuzut.design21@gmail.com">
+              <span class="icon">✉</span> yuzut.design21@gmail.com
+            </a>
+            <a href="tel:+4915224636708">
+              <span class="icon">☎</span> +49 152 24636708
+            </a>
+            <a href="https://instagram.com/yuzut_design" target="_blank" rel="noopener">
+              <span class="icon">◈</span> @yuzut_design
+            </a>
+          </div>
+        </div>
+        <div class="about-visual">
+          <div class="about-card" style="padding:0;overflow:hidden;border-radius:var(--radius-lg);">
+            <img src="img-hero.jpg" alt="Design Workspace" style="width:100%;height:320px;object-fit:cover;object-position:top;display:block;filter:brightness(0.85);">
+            <div style="padding:32px 36px;">
+            <div class="mono-label">// Stack & Kompetenzen</div>
+            <div class="skill-list">
+              <span class="skill-pill">Webdesign</span>
+              <span class="skill-pill">Branding</span>
+              <span class="skill-pill">Print Design</span>
+              <span class="skill-pill">Logo Design</span>
+              <span class="skill-pill">HTML / CSS</span>
+              <span class="skill-pill">Figma</span>
+              <span class="skill-pill">Photoshop</span>
+              <span class="skill-pill">Illustrator</span>
+              <span class="skill-pill">Social Media</span>
+              <span class="skill-pill">Textildruck</span>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="logo-wrap">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="6" y="4" width="10" height="32" rx="5" fill="white" transform="rotate(-15 6 4)"/>
+            <rect x="15" y="4" width="10" height="32" rx="5" fill="#f5d000" transform="rotate(-5 15 4)"/>
+            <rect x="24" y="4" width="10" height="32" rx="5" fill="white" transform="rotate(8 24 4)"/>
+          </svg>
+          <span>Yuzut<em>Design</em></span>
+        </a>
+        <p>Kreativstudio aus Bochum für Webdesign, Branding und Print — für Unternehmen, die auffallen wollen.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="dienstleistungen.html">Dienstleistungen</a></li>
+          <li><a href="mailto:yuzut.design21@gmail.com">Kontakt</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Kontakt</h4>
+        <ul>
+          <li><a href="mailto:yuzut.design21@gmail.com">yuzut.design21@gmail.com</a></li>
+          <li><a href="tel:+4915224636708">+49 152 24636708</a></li>
+          <li><a href="https://instagram.com/yuzut_design" target="_blank" rel="noopener">@yuzut_design</a></li>
+          <li><a href="https://yuzutdesign.de" target="_blank" rel="noopener">yuzutdesign.de</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 YuzutDesign. Alle Rechte vorbehalten.</span>
+      <span>Designed in Bochum ✦</span>
+    </div>
+  </footer>
+
+  <!-- WhatsApp -->
+  <a id="wa-btn" href="https://wa.me/4915224636708" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+  </a>
+
+  <script>
+    // Hamburger
+    document.getElementById('hamburger').addEventListener('click', () => {
+      document.getElementById('drawer').classList.add('open');
+    });
+    document.getElementById('drawer-close').addEventListener('click', () => {
+      document.getElementById('drawer').classList.remove('open');
+    });
+    document.querySelectorAll('#drawer a').forEach(a => {
+      a.addEventListener('click', () => document.getElementById('drawer').classList.remove('open'));
+    });
+
+    // Intersect fade-in for cards
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.svc-card').forEach((el, i) => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(24px)';
+      el.style.transition = `opacity 0.5s ${i * 0.07}s ease, transform 0.5s ${i * 0.07}s ease, background 0.3s, border-color 0.3s`;
+      observer.observe(el);
+    });
+
+    // Page transition on internal links
+    document.querySelectorAll('a[href]').forEach(a => {
+      if (a.href.startsWith(window.location.origin) && !a.href.startsWith('mailto') && !a.href.startsWith('tel') && !a.target) {
+        a.addEventListener('click', e => {
+          e.preventDefault();
+          document.body.style.opacity = '0';
+          document.body.style.transition = 'opacity 0.3s ease';
+          setTimeout(() => { window.location.href = a.href; }, 300);
+        });
+      }
+    });
+  </script>
+</body>
+</html>
